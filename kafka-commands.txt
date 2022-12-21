@@ -1,0 +1,15 @@
+Download apache kafka 3.3.1
+
+configure log.dirs=/path/ in server.properties
+configure dataDir=/path/ in zookeeper.properties
+
+bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties // start zookeeper`
+bin\windows\kafka-server-start.bat .\config\server.properties // start kafka
+
+bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic msg_topic // create topic
+bin\windows\kafka-topics.bat -list --bootstrap-server localhost:9092 // list all topics
+bin\windows\kafka-topics.bat --bootstrap-server localhost:9092 --topic msg_topic --describe // get topic info
+
+bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic msg_topic // to open kafka producer console for the topic
+
+bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic msg_topic --from-beginning // to open kafka listner console for the topic
