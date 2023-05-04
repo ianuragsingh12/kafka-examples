@@ -20,9 +20,6 @@ public class KafkaTopicConfig {
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
-    private final String jsonTopic = "json_topic";
-    private final String msgTopic = "msg_topic";
-
     @Bean
     public KafkaAdmin kafkaAdmin() {
         Map<String, Object> configs = new HashMap<>();
@@ -31,13 +28,13 @@ public class KafkaTopicConfig {
     }
 
     @Bean
-    public NewTopic topic1() {
-        return new NewTopic(jsonTopic, 1, (short) 1);
+    public NewTopic topic1() { // for Book
+        return new NewTopic(AppConstants.jsonTopic, 1, (short) 1);
     }
 
     @Bean
-    public NewTopic topic2() {
-        return TopicBuilder.name(msgTopic)
+    public NewTopic topic2() { // for String
+        return TopicBuilder.name(AppConstants.msgTopic)
                 .partitions(1)
                 .replicas(1)
                 .build();

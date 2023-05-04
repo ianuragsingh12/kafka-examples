@@ -23,9 +23,6 @@ public class ProducerConfiguration {
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
-    private final String msgGroupId = "msg_group_id";
-    private final String jsonGroupId = "json_group_id";
-
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         var props = new HashMap<String, Object>();

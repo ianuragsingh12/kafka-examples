@@ -24,9 +24,6 @@ public class ConsumerConfiguration {
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
-    private final String msgGroupId = "msg_group_id";
-    private final String jsonGroupId = "json_group_id";
-
     @Bean
     public ConsumerFactory<String, String> consumerFactory() {
 
@@ -34,7 +31,7 @@ public class ConsumerConfiguration {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, msgGroupId);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, AppConstants.msgGroupId);
 
         return new DefaultKafkaConsumerFactory<>(props);
     }
@@ -57,13 +54,13 @@ public class ConsumerConfiguration {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, jsonGroupId);
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, AppConstants.jsonGroupId);
 
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), bookEventDeserializer);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Book> userKafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, Book> kafkaListenerBookContainerFactory() {
         var factory = new ConcurrentKafkaListenerContainerFactory<String, Book>();
         factory.setConsumerFactory(bookConsumerFactory());
         return factory;

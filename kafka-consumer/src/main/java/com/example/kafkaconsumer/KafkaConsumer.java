@@ -14,18 +14,12 @@ public class KafkaConsumer {
 
     private static final Logger log = LoggerFactory.getLogger(KafkaConsumer.class);
 
-    private final String jsonTopic = "json_topic";
-    private final String msgTopic = "msg_topic";
-
-    private final String msgGroupId = "msg_group_id";
-    private final String jsonGroupId = "json_group_id";
-
-    @KafkaListener(topics = msgTopic, groupId = msgGroupId)
+    @KafkaListener(topics = AppConstants.msgTopic, groupId = AppConstants.msgGroupId)
     public void consume(String msg) {
         log.info("Received String: {}", msg);
     }
 
-    @KafkaListener(topics = jsonTopic, groupId = jsonGroupId, containerFactory = "userKafkaListenerContainerFactory")
+    @KafkaListener(topics = AppConstants.jsonTopic, groupId = AppConstants.jsonGroupId, containerFactory = "kafkaListenerBookContainerFactory")
     public void consumeJson(Book book) {
         log.info("Received Json: {}", book);
     }
